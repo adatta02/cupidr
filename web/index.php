@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../config.php';
 
 $app = new Silex\Application();
 
@@ -22,6 +23,12 @@ $app->get('/submit', function () use ($app) {
 });
 
 $app->post('/submit', function () use ($app) {
+
+    $data = $app['request']->request->all();
+
+    print_r($data);
+    die();
+
     return $app->redirect('/submit');
 })->bind("submit_postcard");
 
