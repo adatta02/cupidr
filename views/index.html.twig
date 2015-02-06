@@ -1,0 +1,181 @@
+{% extends "template.html.twig" %}
+
+{% block body %}
+
+    <div class="video-background">
+
+        <div class="video-container">
+            <canvas id="video-background"></canvas>
+        </div>
+
+        <div class="container hero-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center banner">
+                        <h1>Send a Valentines Day postcard<br>to your favorite people!</h1>
+                        <p>(No seriously, we're sending physical pieces of mail.)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container copy-container">
+        <div class="row">
+            <div class="col-md-6">
+
+                <h3>Why?</h3>
+
+                <p>Why not? We wanted to experiment with some new technology and take the
+                    <a href="https://lob.com/" target="_blank">lob.com</a> API for a spin.
+                    Mostly, we just want to have some fun sending memes to people via snail mail.</p>
+
+                <p>We'll let you know once we figure out how to
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Rick Roll</a> someone...</p>
+
+                <h3>How?</h3>
+                <ol class="how-list">
+                    <li>Select an image from our gallery.</li>
+                    <li>Add a caption to make the masterpiece your own.</li>
+                    <li>Fill out FROM and TO address details.</li>
+                    <li>Push the red button to send!</li>
+                </ol>
+
+                <h3>Lets do it!</h3>
+
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="goslingtext.jpg" class="copy-preview" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container template-container">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                <h4>Select a Template</h4>
+
+                <table class="table">
+                    <tr>
+                        <td><a href="#"><img class="thumbnail-select" src="/templates/gosling_small.jpg" /></a></td>
+                        <td><a href="#"><img class="thumbnail-select" src="/templates/americanpsycho_small.jpg" /></a></td>
+                    </tr>
+                </table>
+
+                <h4>Add Some Text</h4>
+
+                <form data-provide="text-form">
+                    <div class="form-group">
+                        <textarea class="form-control" class="postcard-text" name="added-text"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Update</button>
+                    </div>
+
+                    <p>All set? You just need to fill out the address details down below.</p>
+                </form>
+
+            </div>
+            <div class="col-md-9">
+                <div class="template-image-container">
+                    <div class="template-bg">
+                        <div class="overlay-text">
+                            Excuse me, I need to return some video tapes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container address-container">
+
+        <form method="POST" action="{{ path("submit_postcard") }}" data-provide="address-form" class="form-horizontal">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Your Address</h4>
+                    {{ include("_addressForm.html.twig", {prefix: "from"}) }}
+                </div>
+            </div>
+
+            <div class="row their-address">
+                <div class="col-md-6">
+                    <h4>Their Address</h4>
+                    {{ include("_addressForm.html.twig", {prefix: "to"}) }}
+                </div>
+            </div>
+
+            <div class="row their-address">
+                <div class="col-md-6">
+                    <h4>Your Email Address</h4>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <input type="email" name="email" id="email" class="form-control">
+                            <span class="help-block">We'll send you a confirmation email once your postcard is processed.</span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning text-center hidden" data-provide="email-error">
+                        Sorry! That isn't a valid email address.
+                    </div>
+
+                </div>
+            </div>
+
+            <input type="hidden" name="added-text" />
+            <input type="hidden" name="selected-template" />
+
+        </form>
+    </div>
+
+    <div class="container copy-container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <h3>Ready to rock?</h3>
+                <a data-provide="send" href="#" class="btn btn-lg btn-default big-btn">Fire away!</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden">
+        <video id="bgvideo" autoplay loop>
+            <source src="https://s3.amazonaws.com/setfive-public/10things.webm" type="video/webm">
+        </video>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+            $("[data-provide='address-form']").submit(function(){
+                return false;
+            });
+
+            $("[data-provide='send']").click(function(){
+                var email = $("#email").val();
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+                $("[data-provide='email-error']").addClass("hidden");
+
+                if(!re.test(email)){
+                    $("[data-provide='email-error']").removeClass("hidden");
+                    return false;
+                }
+
+                $("[data-provide='address-form'] [name='added-text']").val( $("[data-provide='text-form'] [name='added-text']").val() );
+
+                $("[data-provide='address-form']").off("submit");
+                $("[data-provide='address-form']").submit();
+
+                return false;
+            });
+
+        });
+    </script>
+
+{% endblock body %}

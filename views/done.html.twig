@@ -1,0 +1,32 @@
+{% extends "template.html.twig" %}
+
+{% block body %}
+
+    <div class="video-background">
+
+        <div class="video-container">
+            <canvas id="video-background"></canvas>
+        </div>
+
+        <div class="container hero-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center banner">
+                        <h1>Awesome! We've queued your card.</h1>
+                        <p>Want to send another one? <a href="{{ path("homepage") }}">Go for it!</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hidden">
+        <video id="bgvideo" autoplay loop>
+            <source src="https://s3.amazonaws.com/setfive-public/10things.webm" type="video/webm">
+        </video>
+    </div>
+
+{% endblock body %}

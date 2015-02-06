@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Happy Valentines Day!</title>
+
+    <!-- Bootstrap -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="styles.less" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="js/less.min.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,300|Raleway:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div role="navigation" class="navbar navbar-default navbar-fixed-top hidden">
+    <div class="container">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">Name Here</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+{% block body %}{% endblock body %}
+
+<div class="footer-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                Made with love in Cambridge, MA by <a href="http://www.setfive.com">Setfive</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+
+      var canvas = document.getElementById("video-background");
+      var ctx = canvas.getContext("2d");;
+
+      $(".hero-container").css("height", window.innerHeight);
+
+      ctx.canvas.width  = window.innerWidth;
+      ctx.canvas.height = window.innerHeight;
+
+      var cw = window.innerWidth;;
+      var ch = window.innerHeight;
+
+      var v = document.getElementById('bgvideo');
+
+      v.addEventListener('play', function(){
+          draw(this, ctx, cw, ch);
+      },false);
+
+      function draw(v, c, w, h) {
+
+          if(v.paused || v.ended) {
+              return false;
+          }
+
+          var videoHeight = v.videoHeight;
+          var videoWidth = v.videoWidth;
+
+          var targetWidth = 0;
+          var targetHeight = 0;
+
+          if( w > h ){
+              targetHeight = h;
+              targetWidth = (h * v.videoWidth) / v.videoHeight;
+          }else{
+              targetWidth = w;
+              targetHeight = (w * v.videoHeight) / v.videoWidth;
+          }
+
+          // console.log( targetWidth + " : " + targetHeight );
+
+          ctx.drawImage(v, 0, 0, targetWidth, targetHeight);
+          // setTimeout(draw, 20, v, c, targetWidth, targetHeight);
+      }
+
+  });
+</script>
+
+</body>
+</html>
