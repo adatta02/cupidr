@@ -61,10 +61,16 @@
                 <h4>Select a Template</h4>
 
                 <table class="table">
-                    <tr>
-                        <td><a href="#"><img class="thumbnail-select" src="/templates/gosling_small.jpg" /></a></td>
-                        <td><a href="#"><img class="thumbnail-select" src="/templates/americanpsycho_small.jpg" /></a></td>
-                    </tr>
+
+                    {% for img in images %}
+                        <tr>
+                            <td><a data-provide="bg-link" href="#{{ img[0]["image"] }}"><img class="thumbnail-select" src="/templates/{{ img[0]["thumb"] }}" /></a></td>
+                            {% if 1 in img|keys %}
+                                <td><a data-provide="bg-link" href="#{{ img[1]["image"] }}"><img class="thumbnail-select" src="/templates/{{ img[1]["thumb"] }}" /></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
                 </table>
 
                 <h4>Add Some Text</h4>
@@ -83,11 +89,7 @@
             </div>
             <div class="col-md-9">
                 <div class="template-image-container">
-                    <div class="template-bg">
-                        <div class="overlay-text">
-                            Excuse me, I need to return some video tapes.
-                        </div>
-                    </div>
+                    <div class="template-bg"></div>
                 </div>
             </div>
         </div>
@@ -153,6 +155,14 @@
         $(document).ready(function(){
 
             $("[data-provide='address-form']").submit(function(){
+                return false;
+            });
+
+            $("[data-provide='bg-link']").click(function(){
+
+                var href = $(this).attr("href").replace("#", "");
+                $(".template-bg").css("background-image", "url('/templates/" + href + "')");
+
                 return false;
             });
 

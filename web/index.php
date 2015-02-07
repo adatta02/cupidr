@@ -15,7 +15,21 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 
 $app->get('/', function () use ($app) {
-    return $app['twig']->render('index.html.twig');
+
+    $images = [];
+    foreach( glob(__DIR__ . "/templates/*") as $fn ){
+
+        if( strpos($fn, "_small.jpg") !== false ){
+            continue;
+        }
+
+        $thumbnail = basename(str_replace(".jpg", "_small.jpg", $fn));
+        $images[] = ["image" => basename($fn), "thumb" => $thumbnail];
+    }
+
+    $chunkedArrays = array_chunk($images, 2);
+
+    return $app['twig']->render('index.html.twig', ["images" => $chunkedArrays]);
 })->bind("homepage");
 
 $app->get('/submit', function () use ($app) {
