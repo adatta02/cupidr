@@ -28,8 +28,9 @@ $app->get('/', function () use ($app) {
     }
 
     $chunkedArrays = array_chunk($images, 2);
-
-    return $app['twig']->render('index.html.twig', ["images" => $chunkedArrays]);
+    $templateJson = file_get_contents( dirname(__FILE__) . "/../bin/templates.json" );
+    
+    return $app['twig']->render('index.html.twig', ["images" => $chunkedArrays, "templateJson" => $templateJson]);
 })->bind("homepage");
 
 $app->get('/submit', function () use ($app) {
@@ -39,10 +40,11 @@ $app->get('/submit', function () use ($app) {
 $app->post('/submit', function () use ($app) {
 
     $data = $app['request']->request->all();
-
-    print_r($data);
-    die();
-
+    $pdo = new \PDO(Config::$PDO_CONFIG["dsn"], Config::$PDO_CONFIG["username"], Config::$PDO_CONFIG["password"]);
+    
+    $stmt = $pdo->prepare("INSERT INTO card (email, form_fields, is_sent) VALUES (:email, :fields, false)");
+    $stmt->execute(["email" => $data["email"], "fields" => json_encode($data)]);
+    
     return $app->redirect('/submit');
 })->bind("submit_postcard");
 

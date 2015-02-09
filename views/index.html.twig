@@ -139,7 +139,7 @@
             </div>
 
             <input type="hidden" name="added-text" />
-            <input type="hidden" name="selected-template" />
+            <input type="hidden" name="selected-template" value="ryangosling.jpg" />
 
         </form>
     </div>
@@ -162,10 +162,7 @@
     <script>
         $(document).ready(function(){                    
             
-            var styleOverrides = [
-              {template: "asgood.jpg", styles: {top: "300px", height: "80px"}},
-              {template: "farva.jpg", styles: {top: "200px", width: "300px", left: "10px", transform: "rotate(-30deg)"}}
-            ];
+            var styleOverrides = {{ templateJson|raw }};
             
             $("[data-provide='address-form']").submit(function(){
                 return false;
@@ -180,11 +177,17 @@
             $("[data-provide='bg-link']").click(function(){                                
                 var href = $(this).attr("href").replace("#", "");                
                 
-                var styles = $.grep(styleOverrides, function(e){return e.template == href;}); 
-                styles = styles.length? styles[0]["styles"] : {};                
+                var styles = $.grep(styleOverrides, function(e){return e.template == href;});                                
                 
                 $(".template-bg").css("background-image", "url('/templates/" + href + "')");                               
-                $(".template-bg .text").css( styles );
+                
+                $(".template-bg .text").attr("style", null);
+                
+                if( styles.length ){
+                  $(".template-bg .text").css( styles[0]["styles"] );
+                }
+                
+                $("[name='selected-template']").val(href);
                 
                 return false;
             });
