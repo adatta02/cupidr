@@ -73,24 +73,32 @@
 
                 </table>
 
-                <h4>Add Some Text</h4>
-
-                <form data-provide="text-form">
-                    <div class="form-group">
-                        <textarea class="form-control" class="postcard-text" name="added-text"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">Update</button>
-                    </div>
-
-                    <p>All set? You just need to fill out the address details down below.</p>
-                </form>
-
             </div>
             <div class="col-md-9">
                 <div class="template-image-container">
-                    <div class="template-bg"></div>
+                    <div class="template-bg"><div class="text"></div></div>
                 </div>
+                
+                <h4>Add Some Text</h4>
+
+                <form data-provide="text-form">
+                    
+                    <div class="alert alert-warning text-center hidden" data-provide="added-text-error">
+                        Sorry! You need to enter some text.
+                    </div>                    
+                    
+                    <div class="form-group">
+                        <textarea data-provide="added-text" class="form-control" class="postcard-text" name="added-text"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <p class="allset">
+                          <strong>Note:</strong> If text is not visible it will not be printed.<br> 
+                          All set? You just need to fill out the address details down below.
+                        </p>
+                        
+                    </div>                    
+                </form>                
+                
             </div>
         </div>
     </div>
@@ -152,17 +160,32 @@
     </div>
 
     <script>
-        $(document).ready(function(){
-
+        $(document).ready(function(){                    
+            
+            var styleOverrides = [
+              {template: "asgood.jpg", styles: {top: "300px", height: "80px"}},
+              {template: "farva.jpg", styles: {top: "200px", width: "300px", left: "10px", transform: "rotate(-30deg)"}}
+            ];
+            
             $("[data-provide='address-form']").submit(function(){
                 return false;
             });
-
-            $("[data-provide='bg-link']").click(function(){
-
-                var href = $(this).attr("href").replace("#", "");
-                $(".template-bg").css("background-image", "url('/templates/" + href + "')");
-
+            
+            $("[data-provide='added-text']").keyup(function(){
+              $(".template-bg .text").html( $(this).val() );
+            });
+            
+            $("[data-provide='added-text']").keyup();
+            
+            $("[data-provide='bg-link']").click(function(){                                
+                var href = $(this).attr("href").replace("#", "");                
+                
+                var styles = $.grep(styleOverrides, function(e){return e.template == href;}); 
+                styles = styles.length? styles[0]["styles"] : {};                
+                
+                $(".template-bg").css("background-image", "url('/templates/" + href + "')");                               
+                $(".template-bg .text").css( styles );
+                
                 return false;
             });
 
@@ -171,12 +194,19 @@
                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
                 $("[data-provide='email-error']").addClass("hidden");
-
+                $("[data-provide='text-form'] [data-provide='added-text-error']").addClass("hidden");
+                
                 if(!re.test(email)){
                     $("[data-provide='email-error']").removeClass("hidden");
                     return false;
                 }
-
+                
+                if( $("[data-provide='text-form'] [name='added-text']").val().length == 0 ){
+                  $("[data-provide='text-form'] [data-provide='added-text-error']").removeClass("hidden");
+                  $("[data-provide='text-form'] [name='added-text']").focus();
+                  return false;
+                }
+                
                 $("[data-provide='address-form'] [name='added-text']").val( $("[data-provide='text-form'] [name='added-text']").val() );
 
                 $("[data-provide='address-form']").off("submit");
