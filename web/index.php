@@ -19,7 +19,7 @@ $app->get('/', function () use ($app) {
     $images = [];
     foreach( glob(__DIR__ . "/templates/*") as $fn ){
 
-        if( strpos($fn, "_small.jpg") !== false ){
+        if( strpos($fn, "_small.jpg") !== false || strpos($fn, "postcard_back.png") !== false ){
             continue;
         }
 
@@ -60,7 +60,7 @@ $app->get('/approve/{fname}', function ($fname) use ($app) {
     
     $formData = json_decode($rows[0]["form_fields"], true);
         
-    $rm = new ImageTool(Config::$LOB_TEST_KEY);
+    $rm = new ImageTool(Config::$LOB_LIVE_KEY);
     $result = $rm->sendPostcard($formData["address"]["to"], $formData["address"]["from"], $urls);  
    
     $stmt = $pdo->prepare("UPDATE card SET lob_result = :result, is_sent = true WHERE filename = :filename");
@@ -115,7 +115,7 @@ Form:\n" . print_r($data, true);
                 ->setTo( [ "contact@setfive.com" ] )
                 ->setBody( $email );
 
-    if(0){
+    if(1){
       $app['mailer']->send($userMessage);
       $app['mailer']->send($message);    
     }
