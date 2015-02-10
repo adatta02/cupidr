@@ -90,31 +90,29 @@ src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab
       v.addEventListener('play', function(){
           draw(this, ctx, cw, ch);
       },false);
-
+            
       function draw(v, c, w, h) {
 
-          if(v.paused || v.ended) {
+          if(v.paused || v.ended) {              
               return false;
           }
 
           var videoHeight = v.videoHeight;
-          var videoWidth = v.videoWidth;
+          var videoWidth = v.videoWidth;          
 
           var targetWidth = 0;
           var targetHeight = 0;
 
-          if( w > h ){
-              targetHeight = h;
-              targetWidth = (h * v.videoWidth) / v.videoHeight;
-          }else{
+          if( ctx.canvas.width > ctx.canvas.height ){
               targetWidth = w;
               targetHeight = (w * v.videoHeight) / v.videoWidth;
+          }else{
+              targetHeight = h;
+              targetWidth = (h * v.videoWidth) / v.videoHeight;
           }
 
-          // console.log( targetWidth + " : " + targetHeight );
-
           ctx.drawImage(v, 0, 0, targetWidth, targetHeight);
-          // setTimeout(draw, 20, v, c, targetWidth, targetHeight);
+          setTimeout(draw, 20, v, c, targetWidth, targetHeight);
       }
 
   });
