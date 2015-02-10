@@ -87,6 +87,29 @@ $app->get('/approve/{fname}', function ($fname) use ($app) {
     return $app['twig']->render("approve.html.twig", ["result" => print_r($result, true)]);
 })->bind("approve");
 
+$app->get('/render/{fname}', function ($fname) use ($app) {
+	
+	$pdo = new \PDO(Config::$PDO_CONFIG["dsn"], Config::$PDO_CONFIG["username"], Config::$PDO_CONFIG["password"]);
+	
+	$stmt = $pdo->prepare("SELECT * FROM card WHERE filename = :filename");
+	$stmt->execute(["filename" => $fname]);
+	
+	$rows = $stmt->fetchAll();	
+	
+	if(count($rows) == 0){
+		die("Card not found?");
+	}
+		
+	$filename = dirname(__FILE__) . "/rendered/" . $rows[0]["filename"];
+	$data = json_decode($rows[0]["form_fields"], true);
+	
+	$rm = new ImageTool();
+	$rm->render( ["added-text" => $data["added-text"], "selected-template" => $data["selected-template"]], $filename );
+
+	header('Content-Type: image/png');
+	return $app->sendFile( $filename );
+});
+
 $app->post('/submit', function () use ($app) {
 
     $data = $app['request']->request->all();

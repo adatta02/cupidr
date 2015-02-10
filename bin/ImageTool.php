@@ -80,8 +80,8 @@ class ImageTool {
     $template = $params["selected-template"];
     
     $numChars = $this->getNumchars($template);    
-    $lines = str_split($params["added-text"], $numChars);
-        
+    $lines = str_split($params["added-text"], $numChars);    
+    
     $font = dirname(__FILE__) . "/OpenSans-ExtraBold.ttf";
     $templateImg = imagecreatefromjpeg( dirname(__FILE__) . "/../web/templates/" . $template );
     

@@ -154,8 +154,8 @@
     </div>
 
     <div class="hidden">
-        <video id="bgvideo" autoplay loop>
-            <source src="https://s3.amazonaws.com/setfive-public/beautybeast.webm" type="video/webm">
+        <video id="bgvideo" autoplay loop muted>
+            <source src="https://s3.amazonaws.com/setfive-public/beautybeast.webm?r={{ random() }}" type="video/webm">
         </video>
     </div>
 
@@ -169,14 +169,15 @@
             });
             
             $("[data-provide='added-text']").keyup(function(){
-              $(".template-bg .text").html( $(this).val() );
+              var text = $(this).val();
+              text = text.replace("\n", "<br>");
+              $(".template-bg .text").html( text );
             });
             
             $("[data-provide='added-text']").keyup();
             
             $("[data-provide='bg-link']").click(function(){                                
-                var href = $(this).attr("href").replace("#", "");                
-                
+                var href = $(this).attr("href").replace("#", "");                                
                 var styles = $.grep(styleOverrides, function(e){return e.template == href;});                                
                 
                 $(".template-bg").css("background-image", "url('/templates/" + href + "')");                               
