@@ -4,7 +4,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new Silex\Application();
 
-$app["debug"] = true;
+$app["debug"] = false;
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
@@ -13,6 +13,20 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
+
+$encoder = new Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder();
+$password = $encoder->encodePassword(Config::$ADMIN_PASSWORD, '');
+
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+		'security.firewalls' => array(
+		'admin' => array(
+				'pattern' => '^/approve',
+				'http' => true,
+				'users' => array(
+					'admin' => array('ROLE_ADMIN', $password),
+				),),
+		)		 
+));
 
 $app->get('/', function () use ($app) {
 
@@ -53,6 +67,10 @@ $app->get('/approve/{fname}', function ($fname) use ($app) {
 
     if(count($rows) == 0){
       die("Card not found?");
+    }
+    
+    if($rows[0]["is_sent"]){
+    	die("This card has been sent.");
     }
     
     $urls = ["front" => "http://cupidr.setfive.com/rendered/" . $fname, 

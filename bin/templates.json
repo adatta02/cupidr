@@ -1,5 +1,13 @@
 [
    {
+      "template":"loveactuallytwo.jpg",
+      "styles":{
+         "top":"300px",
+         "max-height":"190px",
+         "color": "#ffffff"
+      }
+   },
+   {
       "template":"asgood.jpg",
       "styles":{
          "top":"320px",

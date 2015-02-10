@@ -2,7 +2,8 @@
     "require": {
         "silex/silex": "~1.2",
         "symfony/twig-bridge": "~2.6",
-        "swiftmailer/swiftmailer": "@stable"
+        "swiftmailer/swiftmailer": "@stable",
+        "symfony/security": "~2.6"
     },
     "autoload": {
         "files": ["config.php", "bin/ImageTool.php"]
