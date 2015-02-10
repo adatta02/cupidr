@@ -1,13 +1,93 @@
 [
-  {template: "asgood.jpg", styles: {top: "320px", "max-height": "200px"}},
-  {template: "farva.jpg", styles: {top: "200px", "max-width": "300px", left: "30px", color: "#fff", "max-height": "220px", transform: "rotate(-30deg)"}},
-  {template: "kennypowers.jpg", styles: {right: "140px", left: "auto", width: "350px", color: "#fff"}},
-  {template: "loveactually.jpg", styles: {left: "200px", "max-width": "400px", top: "250px"}},
-  {template: "nickcage.jpg", styles: {"max-height": "150px", top: "320px", color: "#fff"}},
-  {template: "notebook.jpg", styles: {"max-height": "140px", top: "330px", color: "#fff"}},
-  {template: "officespace.jpg", styles: {"max-height": "150px", top: "320px", color: "#fff"}},
-  {template: "supertroopers.jpg", styles: {"max-height": "160px", top: "330px", color: "#fff"}},
-  {template: "titantic.jpg", styles: {"left": "300px", top: "20px", width: "400px", color: "#fff"}},
-  {template: "topgun.jpg", styles: {"top": "350px", "max-height": "100px", color: "#fff"}},
-  {template: "dirtydancing.jpg", styles: {"top": "320px", "max-height": "180px", color: "#fff"}},              
+   {
+      "template":"asgood.jpg",
+      "styles":{
+         "top":"320px",
+         "max-height":"200px"
+      }
+   },
+   {
+      "template":"farva.jpg",
+      "styles":{
+         "top":"200px",
+         "max-width":"300px",
+         "left":"30px",
+         "color":"#ffffff",
+         "max-height":"220px",
+         "transform":"rotate(-30deg)"
+      }
+   },
+   {
+      "template":"kennypowers.jpg",
+      "styles":{
+         "left":"330px",         
+         "max-width":"350px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"loveactually.jpg",
+      "styles":{
+         "left":"200px",
+         "max-width":"400px",
+         "top":"250px"
+      }
+   },
+   {
+      "template":"nickcage.jpg",
+      "styles":{
+         "max-height":"150px",
+         "top":"320px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"notebook.jpg",
+      "styles":{
+         "max-height":"140px",
+         "top":"330px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"officespace.jpg",
+      "styles":{
+         "max-height":"150px",
+         "top":"320px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"supertroopers.jpg",
+      "styles":{
+         "max-height":"160px",
+         "top":"330px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"titantic.jpg",
+      "styles":{
+         "left":"300px",
+         "top":"20px",
+         "max-width":"400px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"topgun.jpg",
+      "styles":{
+         "top":"350px",
+         "max-height":"140px",
+         "color":"#ffffff"
+      }
+   },
+   {
+      "template":"dirtydancing.jpg",
+      "styles":{
+         "top":"320px",
+         "max-height":"180px",
+         "color":"#ffffff"
+      }
+   }
 ]
