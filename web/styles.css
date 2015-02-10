@@ -176,8 +176,11 @@ h4 {
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 695px;
+  max-width: 695px;
   max-height: 450px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 .template-container p.allset {
   margin: 0px;
@@ -197,6 +200,12 @@ h4 {
 }
 .address-container .their-address {
   margin-top: 40px;
+}
+.saved-image-button {
+  margin-bottom: 10px;
+}
+.saved-image-container .saved-image {
+  width: 100%;
 }
 .footer-container {
   border-top: 2px solid #444;

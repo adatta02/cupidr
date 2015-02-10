@@ -8,7 +8,7 @@
 
     <!-- Bootstrap -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet/less" type="text/css" href="styles.less" />
+    <link rel="stylesheet/less" type="text/css" href="/styles.less" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,7 +22,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>    
     
-    <script src="js/less.min.js"></script>
+    <script src="/js/less.min.js"></script>
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,300|Raleway:400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
@@ -67,16 +67,19 @@
 
       var canvas = document.getElementById("video-background");
       var ctx = canvas.getContext("2d");;
-
-      $(".hero-container").css("height", window.innerHeight);
+      var v = document.getElementById('bgvideo');
+      
+      $(".hero-container").css("min-height", window.innerHeight);
+      
+      if(!v){
+        return;
+      }
 
       ctx.canvas.width  = window.innerWidth;
       ctx.canvas.height = window.innerHeight;
 
       var cw = window.innerWidth;;
-      var ch = window.innerHeight;
-
-      var v = document.getElementById('bgvideo');
+      var ch = window.innerHeight;      
 
       v.addEventListener('play', function(){
           draw(this, ctx, cw, ch);
