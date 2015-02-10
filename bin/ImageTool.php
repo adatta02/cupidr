@@ -98,7 +98,7 @@ class ImageTool {
     		}else{
     			$lines[] = join(" " , $chunked);
     			$chunked = [$wr];
-    			$totalChars = 0;    			    			
+    			$totalChars = strlen($wr) + 1;    			    			
     		}
     		    		
     	}
