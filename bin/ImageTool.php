@@ -83,11 +83,28 @@ class ImageTool {
 
     $lines = [];
     $eachLine = explode("<br>", $params["added-text"]);    
-    
+        
     foreach( $eachLine as $el ){
-    	$chunked = str_split($el, $numChars);
-    	$lines = array_merge( $lines, $chunked ); 
-    }           
+    	
+    	$words = explode(" ", $el);
+    	$totalChars = 0;
+    	$chunked = [];
+    	
+    	foreach( $words as $wr ){
+    		
+    		if( $totalChars < $numChars && ($totalChars + strlen($wr)) < $numChars ){
+    			$totalChars += strlen($wr) + 1;
+    			$chunked[] = $wr;
+    		}else{
+    			$lines[] = join(" " , $chunked);
+    			$chunked = [];
+    			$totalChars = 0;    			    			
+    		}
+    		    		
+    	}
+
+    	$lines[] = join(" " , $chunked);  	
+    }               
     
     $font = dirname(__FILE__) . "/OpenSans-ExtraBold.ttf";
     $templateImg = imagecreatefromjpeg( dirname(__FILE__) . "/../web/templates/" . $template );
