@@ -102,9 +102,9 @@ class RenderImage {
     $height += 60;
     $width = max($widths);
     
-    $pasteCoords = $this->getPasteCoords($template);   
-        
-    imagecopy($templateImg, $im, $pasteCoords[0], $pasteCoords[1], 0, 0, $width, $height);
+    $pasteCoords = $this->getPasteCoords($template);           
+    
+    imagecopy($templateImg, $im, $pasteCoords[0], $pasteCoords[1], 0, 0, $width, $height);    
     
     header('Content-Type: image/png');
     imagepng($templateImg);
@@ -114,8 +114,9 @@ class RenderImage {
   
 }
 
-$template = "nickcage.jpg";
+$template = "farva.jpg";
 $text = "I love you like a fat kid loves cake...I love you like a fat kid loves cake..";
+$text = "I love you!";
 
 $rm = new RenderImage();
 $rm->render( ["added-text" => $text, "selected-template" => $template] );
