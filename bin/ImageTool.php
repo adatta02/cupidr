@@ -53,7 +53,7 @@ class ImageTool {
   }  
   
   public function getNumchars($template){
-    $default = 45;    
+    $default = 40;    
     $config = $this->getConfig( $template );
     
     if( !$config || !array_key_exists("max-width", $config) ){
@@ -79,8 +79,15 @@ class ImageTool {
     
     $template = $params["selected-template"];
     
-    $numChars = $this->getNumchars($template);    
-    $lines = str_split($params["added-text"], $numChars);    
+    $numChars = $this->getNumchars($template);
+
+    $lines = [];
+    $eachLine = explode("<br>", $params["added-text"]);    
+    
+    foreach( $eachLine as $el ){
+    	$chunked = str_split($el, $numChars);
+    	$lines = array_merge( $lines, $chunked ); 
+    }           
     
     $font = dirname(__FILE__) . "/OpenSans-ExtraBold.ttf";
     $templateImg = imagecreatefromjpeg( dirname(__FILE__) . "/../web/templates/" . $template );
