@@ -97,14 +97,14 @@ class ImageTool {
     			$chunked[] = $wr;
     		}else{
     			$lines[] = join(" " , $chunked);
-    			$chunked = [];
+    			$chunked = [$wr];
     			$totalChars = 0;    			    			
     		}
     		    		
     	}
 
     	$lines[] = join(" " , $chunked);  	
-    }               
+    }
     
     $font = dirname(__FILE__) . "/OpenSans-ExtraBold.ttf";
     $templateImg = imagecreatefromjpeg( dirname(__FILE__) . "/../web/templates/" . $template );

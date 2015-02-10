@@ -75,9 +75,9 @@
    {
       "template":"titantic.jpg",
       "styles":{
-         "left":"300px",
+         "left":"260px",
          "top":"20px",
-         "max-width":"400px",
+         "max-width":"380px",
          "color":"#ffffff"
       }
    },
