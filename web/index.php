@@ -81,8 +81,10 @@ $app->get('/approve/{fname}', function ($fname) use ($app) {
     $rm = new ImageTool(Config::$LOB_LIVE_KEY);
     $result = $rm->sendPostcard($formData["address"]["to"], $formData["address"]["from"], $urls);  
    
-    $stmt = $pdo->prepare("UPDATE card SET lob_result = :result, is_sent = true WHERE filename = :filename");
-    $stmt->execute(["filename" => $fname, "result" => json_encode($result)]);   
+    if( count($result["errors"]) == 0 ){
+    	$stmt = $pdo->prepare("UPDATE card SET lob_result = :result, is_sent = true WHERE filename = :filename");
+    	$stmt->execute(["filename" => $fname, "result" => json_encode($result)]);
+    }      
    
     return $app['twig']->render("approve.html.twig", ["result" => print_r($result, true)]);
 })->bind("approve");

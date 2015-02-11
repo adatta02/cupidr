@@ -53,7 +53,7 @@ class ImageTool {
   }  
   
   public function getNumchars($template){
-    $default = 40;    
+    $default = 39;    
     $config = $this->getConfig( $template );
     
     if( !$config || !array_key_exists("max-width", $config) ){

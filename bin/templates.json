@@ -8,6 +8,14 @@
       }
    },
    {
+      "template":"otherwoman.jpg",
+      "styles":{
+         "top":"280px",
+         "max-height":"190px",
+         "color": "#ffffff"
+      }
+   },
+   {
       "template":"asgood.jpg",
       "styles":{
          "top":"320px",
@@ -52,15 +60,16 @@
       "template":"notebook.jpg",
       "styles":{
          "max-height":"140px",
-         "top":"330px",
+         "top":"300px",
          "color":"#ffffff"
       }
    },
    {
       "template":"officespace.jpg",
       "styles":{
+         "max-width": "600px", 
          "max-height":"150px",
-         "top":"320px",
+         "top":"300px",
          "color":"#ffffff"
       }
    },
