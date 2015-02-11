@@ -108,14 +108,14 @@
         <form method="POST" action="{{ path("submit_postcard") }}" data-provide="address-form" class="form-horizontal">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" data-provide="form-container" data-prefix="from">
                     <h4>Your Address</h4>
                     {{ include("_addressForm.html.twig", {prefix: "from"}) }}
                 </div>
             </div>
 
             <div class="row their-address">
-                <div class="col-md-6">
+                <div class="col-md-6" data-provide="form-container" data-prefix="to">
                     <h4>Their Address</h4>
                     {{ include("_addressForm.html.twig", {prefix: "to"}) }}
                 </div>
@@ -165,6 +165,31 @@
     </div>
 
     <script>
+    
+        function checkAddressErrors(){
+          var errors = 0;
+          
+          $("[data-provide='form-container']").each(function(){
+            var blankValues = 0;
+            
+            $(this).find("[data-provide='address-error']").addClass("hidden");
+            
+            $(this).find("input, select").each(function(){
+              if( $(this).attr("name").indexOf("address_line2") == -1 && $(this).val().length == 0 ){
+                blankValues += 1;
+              }
+            });
+            
+            if( blankValues ){
+              $(this).find("[data-provide='address-error']").removeClass("hidden");
+            }
+            
+            errors += blankValues;
+          });
+          
+          return errors;
+        }    
+    
         $(document).ready(function(){                    
             
             var styleOverrides = {{ templateJson|raw }};            
@@ -197,7 +222,7 @@
                 
                 return false;
             });
-
+                        
             $("[data-provide='send']").click(function(){
                 var email = $("#email").val();
                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -209,6 +234,10 @@
                     $("[data-provide='email-error']").removeClass("hidden");
                     return false;
                 }
+                
+                if( checkAddressErrors() > 0 ){
+                  $(window).scrollTop( $("[data-provide='address-error']:visible:first").offset().top )
+                } 
                 
                 if( $("[data-provide='text-form'] [name='added-text']").val().length == 0 ){
                   $("[data-provide='text-form'] [data-provide='added-text-error']").removeClass("hidden");
